@@ -19,8 +19,8 @@ public class User {
     private String logo;
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Product> products;
-    @ManyToMany
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Invoice> invoices;
 }

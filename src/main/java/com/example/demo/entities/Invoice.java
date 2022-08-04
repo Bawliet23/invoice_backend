@@ -20,6 +20,10 @@ public class Invoice {
     private String po;
     private Date date;
     private Date dueDate;
+
+
+    @ManyToOne(fetch = FetchType.LAZY,cascade =CascadeType.PERSIST)
+    private User user;
     @OneToMany(
             mappedBy = "invoice",
             cascade = CascadeType.ALL,
