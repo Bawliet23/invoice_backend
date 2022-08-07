@@ -14,6 +14,7 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String logo;
     private String email;
     private String shipTo;
     private String billTo;
