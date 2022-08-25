@@ -29,13 +29,14 @@ public class ProductService implements IProductService {
 
 
     @Override
-    public boolean addProduct(Long userId, ProductDtO productDtO) {
-        Optional<User> exist = userRepository.findById(userId);
+    public boolean addProduct( ProductDtO productDtO) {
+        Optional<User> exist = userRepository.findById(productDtO.getUser());
         if (exist.isEmpty())
             return false;
         User user = exist.get();
-        user.getProducts().add(modelMapper.map(productDtO, Product.class));
-        userRepository.save(user);
+       Product product = modelMapper.map(productDtO, Product.class);
+       product.setUser(user);
+        productRepository.save(product);
         return true;
 
     }

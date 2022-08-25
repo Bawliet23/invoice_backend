@@ -23,9 +23,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserDto addUser(UserDto userDto, MultipartFile logo) throws IOException {
+    public UserDto addUser(UserDto userDto) {
         User user = modelMapper.map(userDto,User.class);
-        user.setLogo(FileHandler.uploadFile(logo));
         User u =  userRepository.save(user);
         return modelMapper.map(u,UserDto.class);
     }

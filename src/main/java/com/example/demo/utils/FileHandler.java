@@ -20,7 +20,7 @@ import static java.nio.file.Paths.get;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 public class FileHandler {
-    private static String LOGODIRECTORY = "src/main/webapp/logos/";
+    private static String LOGODIRECTORY = "src/main/webapp/";
 
     public  static String  uploadFile(MultipartFile file) throws IOException {
         Path fileStorage=null;

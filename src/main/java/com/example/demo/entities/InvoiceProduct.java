@@ -14,7 +14,7 @@ public class InvoiceProduct {
     private Long id;
     @Positive
     private int quantity;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Product product;
     @ManyToOne(fetch = FetchType.LAZY)
     private Invoice invoice;

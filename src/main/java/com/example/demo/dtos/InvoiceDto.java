@@ -16,6 +16,7 @@ public class InvoiceDto {
     private String po;
     private Date date;
     private Date dueDate;
+    private String logo;
 
 
     private List<InvoiceProductDto> orderItems ;

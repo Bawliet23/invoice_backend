@@ -39,10 +39,9 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> addUser(@RequestParam("user") String   userDto,@RequestParam("logo") MultipartFile logo) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        UserDto userdto = objectMapper.readValue(userDto,UserDto.class);
-        UserDto user = userService.addUser(userdto,logo);
+    public ResponseEntity<?> addUser(@RequestBody() UserDto   userDto) throws IOException {
+
+        UserDto user = userService.addUser(userDto);
         if (user==null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
         return ResponseEntity.status(HttpStatus.OK).body(user);

@@ -10,7 +10,7 @@ import java.io.IOException;
 @Service
 public interface IUserService {
 
-public UserDto addUser(UserDto userDto, MultipartFile logo) throws IOException;
+public UserDto addUser(UserDto userDto);
 public UserDto updateUser(UserDto userDto);
 public UserDto getUser(Long id);
 public boolean deleteUser(Long id);

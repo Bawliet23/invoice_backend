@@ -9,5 +9,6 @@ public class ProductDtO {
     private Long id;
     private String name;
     private double price;
+    private Long user;
 
 }
