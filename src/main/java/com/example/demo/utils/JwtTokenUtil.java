@@ -1,5 +1,6 @@
 package com.example.demo.utils;
 
+import com.example.demo.security.MyUserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,7 +23,7 @@ public class JwtTokenUtil implements Serializable {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String getUsernameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -43,9 +44,9 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(MyUserPrincipal userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(userDetails.getAuthorities(), userDetails.getUsername());
+        return doGenerateToken(userDetails.getAuthorities(), userDetails.getUser().getEmail());
     }
 
     private String doGenerateToken(Collection claims, String subject) {
@@ -54,8 +55,8 @@ public class JwtTokenUtil implements Serializable {
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    public Boolean validateToken(String token, MyUserPrincipal userDetails) {
+        final String email = getEmailFromToken(token);
+        return (email.equals(userDetails.getUser().getEmail()) && !isTokenExpired(token));
     }
 }
