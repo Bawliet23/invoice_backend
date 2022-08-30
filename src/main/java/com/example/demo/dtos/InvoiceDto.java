@@ -3,6 +3,7 @@ package com.example.demo.dtos;
 
 import lombok.Data;
 
+import javax.persistence.Transient;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,14 @@ public class InvoiceDto {
     private Date date;
     private Date dueDate;
     private String logo;
+    private double subtotal;
+    private double tax;
+    private double total;
+    private double amountPaid;
+    private double balanceDue;
+    private String note;
+    private String Term;
+
 
 
     private List<InvoiceProductDto> orderItems ;
