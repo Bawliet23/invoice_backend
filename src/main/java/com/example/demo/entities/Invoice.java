@@ -24,6 +24,7 @@ public class Invoice {
     private String po;
     private Date date;
     private Date dueDate;
+    private String currency;
     @Transient
     private double subtotal;
     private double tax;
