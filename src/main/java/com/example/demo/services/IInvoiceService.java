@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 
 public interface IInvoiceService {
     InvoiceDto addInvoice(Long id, InvoiceDto invoiceDto, MultipartFile logo) throws  IOException;
-    void getInvoice(HttpServletResponse response, Long id) throws DocumentException, IOException;
+    void getInvoice(HttpServletResponse response, Long id) throws DocumentException, IOException, ParseException;
 }

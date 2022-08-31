@@ -17,6 +17,7 @@ public class InvoiceDto {
     private String po;
     private Date date;
     private Date dueDate;
+    private String paymentTerm;
     private String currency;
     private String logo;
     private double subtotal;

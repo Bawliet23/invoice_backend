@@ -19,6 +19,7 @@ public class Invoice {
     private String email;
     private String note;
     private String Term;
+    private String paymentTerm;
     private String shipTo;
     private String billTo;
     private String po;
