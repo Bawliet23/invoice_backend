@@ -46,7 +46,8 @@ public class WebConfig  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()
-                .cors().disable()
+                .cors()
+                .and()
                 .authorizeRequests().antMatchers("/api/v1/auth/**","/swagger-ui.html").permitAll()
                 .and()
                 .authorizeRequests().anyRequest().authenticated()

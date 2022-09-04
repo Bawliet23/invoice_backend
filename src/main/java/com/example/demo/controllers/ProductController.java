@@ -5,13 +5,11 @@ import com.example.demo.dtos.UserDto;
 import com.example.demo.services.IProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/product")
+@CrossOrigin("*")
 public class ProductController {
 
     private final IProductService productService;

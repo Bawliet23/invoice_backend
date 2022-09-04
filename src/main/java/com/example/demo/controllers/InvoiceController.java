@@ -25,6 +25,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/api/v1/invoice")
+@CrossOrigin("*")
 public class InvoiceController {
 
     private final IInvoiceService  invoiceService;
@@ -47,7 +48,7 @@ public class InvoiceController {
         return new ResponseEntity<>(pdf, HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public void test(HttpServletResponse response,@PathVariable("id") Long id) throws IOException, DocumentException, ParseException {
+    public void download(HttpServletResponse response,@PathVariable("id") Long id) throws IOException, DocumentException, ParseException {
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());

@@ -33,8 +33,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         String email = null;
         String jwtToken = null;
-        final String requestTokenHeader = request.getHeader("Authorization");
-
+         final String requestTokenHeader = request.getHeader("Authorization");
+        System.out.println(request.getHeader("Authorization"));
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {

@@ -14,6 +14,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/user")
+@CrossOrigin("*")
 public class UserController {
 
     private final IUserService userService;
