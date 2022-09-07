@@ -25,5 +25,10 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
         return ResponseEntity.status(HttpStatus.OK).body("Product was added");
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Product was deleted");
+    }
 
 }

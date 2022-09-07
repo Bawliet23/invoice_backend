@@ -1,11 +1,14 @@
 package com.example.demo.services;
 
 import com.example.demo.dtos.ProductDtO;
+import com.example.demo.dtos.ProductDtO1;
 import com.example.demo.entities.Product;
 import com.example.demo.entities.User;
 import com.example.demo.repositories.IProductRepository;
 import com.example.demo.repositories.IUserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,10 +60,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<ProductDtO> getproductsByUser(Long id) {
+    public Page<ProductDtO1> getproductsByUser(Long id, Pageable pageable) {
         Optional<User> exist = userRepository.findById(id);
-        if(exist.isPresent())
+        if(exist.isEmpty())
             new Exception("user not found");
-        return exist.get().getProducts().stream().map((product -> modelMapper.map(product, ProductDtO.class))).collect(Collectors.toList());
+        Page<Product> products = productRepository.findAllByUser(pageable,exist.get());
+        return products.map(product -> modelMapper.map(product,ProductDtO1.class));
     }
 }

@@ -24,8 +24,11 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -224,6 +227,24 @@ public class InvoiceService implements IInvoiceService {
         }
 
     }
+
+    @Override
+    public void delete(Long id) {
+        Optional<Invoice> invoice = invoiceRepository.findById(id);
+        invoice.ifPresent(invoiceRepository::delete);
+    }
+
+    @Override
+    public List<InvoiceDto> getInvoicesByUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        List<InvoiceDto> invoices = new ArrayList<>();
+        if (user.isPresent()){
+           invoices = user.get().getInvoices().stream().map(invoice -> modelMapper.map(invoice,InvoiceDto.class)).collect(Collectors.toList());
+        }
+
+        return invoices;
+    }
+
     public String convertDate(Date d, String newFormat) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat(newFormat);
         return sdf.format(d);

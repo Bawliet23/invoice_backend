@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 
 import com.example.demo.dtos.JwtResponse;
 import com.example.demo.dtos.LoginDto;
+import com.example.demo.dtos.RegisterDto;
 import com.example.demo.dtos.UserDto;
 import com.example.demo.entities.User;
 import com.example.demo.security.MyUserPrincipal;
@@ -16,6 +17,8 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,14 +47,14 @@ public class AuthentificationController {
     public ResponseEntity<?> signIn(@RequestBody LoginDto login) throws Exception {
         System.out.println("controller Auth");
         final MyUserPrincipal userDetails = (MyUserPrincipal) userDetailsService.loadUserByUsername(login.getEmail());
-//        authenticate(userDetails.getUsername(), login.getPassword());
+        authenticate(login.getEmail(), login.getPassword());
         final String token = jwtTokenUtil.generateToken(userDetails);
         UserDto user = modelMapper.map(userDetails.getUser(),UserDto.class);
         return ResponseEntity.ok(new JwtResponse(user,token));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signIn(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> signIn(@RequestBody RegisterDto userDto) {
         UserDto client1=userService.addUser(userDto);
         User user = modelMapper.map(client1,User.class);
         MyUserPrincipal userDetails=new MyUserPrincipal(user);
@@ -66,6 +69,8 @@ public class AuthentificationController {
     private void authenticate(String username, String password) throws Exception {
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            SecurityContext sc = SecurityContextHolder.getContext();
+            sc.setAuthentication(authentication);
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {

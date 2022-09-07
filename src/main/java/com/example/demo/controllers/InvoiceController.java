@@ -59,4 +59,11 @@ public class InvoiceController {
 
         invoiceService.getInvoice(response,id);
     }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteInvoice(@PathVariable Long id){
+        invoiceService.delete(id);
+         return new ResponseEntity<>("Invoice Deleted", HttpStatus.OK);
+    }
 }
