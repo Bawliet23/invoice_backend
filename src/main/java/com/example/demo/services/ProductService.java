@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.dtos.InvoiceDto;
 import com.example.demo.dtos.ProductDtO;
 import com.example.demo.dtos.ProductDtO1;
 import com.example.demo.entities.Product;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -66,5 +68,16 @@ public class ProductService implements IProductService {
             new Exception("user not found");
         Page<Product> products = productRepository.findAllByUser(pageable,exist.get());
         return products.map(product -> modelMapper.map(product,ProductDtO1.class));
+    }
+
+    @Override
+    public List<ProductDtO1> getproductsByUser(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        List<ProductDtO1> products = new ArrayList<>();
+        if (user.isPresent()){
+            products = user.get().getProducts().stream().map(product -> modelMapper.map(product,ProductDtO1.class)).collect(Collectors.toList());
+        }
+
+        return products;
     }
 }

@@ -72,5 +72,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad Request");
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
+    @GetMapping("/{id}/productsL")
+    public ResponseEntity<?> getProductsByUser(@PathVariable("id") Long id){
+        List<ProductDtO1> products = productService.getproductsByUser(id);
+        if (products.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("page Not Found");
+        return ResponseEntity.status(HttpStatus.OK).body(products);
+    }
 
 }

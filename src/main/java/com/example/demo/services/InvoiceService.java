@@ -52,6 +52,7 @@ public class InvoiceService implements IInvoiceService {
         invoiceDto.setLogo(l);
         User user = userRepository.findById(id).get();
         Invoice invoice = modelMapper.map(invoiceDto,Invoice.class);
+        invoice.setCurrency("$");
         for (InvoiceProduct inpr :invoice.getOrderItems()) {
             inpr.setInvoice(invoice);
             Product pr = productRepository.findById(inpr.getProduct().getId()).get();

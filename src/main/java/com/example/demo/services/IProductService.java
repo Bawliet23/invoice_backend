@@ -15,6 +15,7 @@ public interface IProductService {
     public void updateProduct(ProductDtO productDtO);
     public boolean deleteProduct(Long productId);
     public Page<ProductDtO1> getproductsByUser(Long id, Pageable pageable);
+    public List<ProductDtO1> getproductsByUser(Long id);
 
 
 }
