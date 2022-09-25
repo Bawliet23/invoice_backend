@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -35,17 +36,11 @@ public class InvoiceController {
     }
 
     @PostMapping("")
-    private ResponseEntity<?> addInvoice(@RequestParam("logo")MultipartFile logo,@RequestParam("invoice") String invoiceDto,@RequestParam("userid") Long id) throws IOException, DocumentException, URISyntaxException {
+    private ResponseEntity<?> addInvoice(@RequestParam("logo")MultipartFile logo,@RequestParam("invoice") String invoiceDto,@RequestParam("userid") Long id) throws IOException, DocumentException, URISyntaxException, MessagingException, ParseException {
         ObjectMapper objectMapper = new ObjectMapper();
         InvoiceDto invoiceDto1 = objectMapper.readValue(invoiceDto,InvoiceDto.class);
         InvoiceDto pdf = invoiceService.addInvoice(id,invoiceDto1,logo);
-//        HttpHeaders headers = new HttpHeaders();
-//        // Here you have to set the actual filename of your pdf
-//        String filename = "invoice.pdf";
-//        headers.setContentDispositionFormData(filename, filename);
-//        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-
-        return new ResponseEntity<>(pdf, HttpStatus.OK);
+          return new ResponseEntity<>(pdf, HttpStatus.OK);
     }
     @GetMapping("/{id}")
     public void download(HttpServletResponse response,@PathVariable("id") Long id) throws IOException, DocumentException, ParseException {
@@ -58,6 +53,11 @@ public class InvoiceController {
         response.setHeader(headerKey, headerValue);
 
         invoiceService.getInvoice(response,id);
+    }
+
+    @GetMapping("/send/{id}")
+    public void download(@PathVariable("id") Long id) throws MessagingException, DocumentException, IOException, ParseException {
+     invoiceService.sendMail(id);
     }
 
 

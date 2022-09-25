@@ -48,6 +48,15 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(invoiceDtos);
     }
 
+    @GetMapping("/{id}/invoicesP")
+    public ResponseEntity<?> getInvoicesByUser(@PathVariable("id") Long id, @PageableDefault(size = 5) Pageable pageable){
+        Page<InvoiceDto> invoiceDtos = invoiceService.getInvoicesByUser(id,pageable);
+        if (invoiceDtos==null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("invoices Not Found");
+        return ResponseEntity.status(HttpStatus.OK).body(invoiceDtos);
+    }
+
+
     @GetMapping("/{id}/products")
     public ResponseEntity<?> getProductsByUser(@PathVariable("id") Long id, @PageableDefault(size = 5) Pageable pageable){
         Page<ProductDtO1> products = productService.getproductsByUser(id,pageable);
